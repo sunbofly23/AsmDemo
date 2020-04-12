@@ -1,0 +1,27 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+dependencies {
+    //1:实现gradleApi和localGroovy
+    implementation gradleApi()
+    implementation localGroovy()
+
+    //引入TransformManager
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //因为asm在最新的gradle已经集成
+    implementation 'com.android.tools.build:gradle:3.4.1'
+
+}
+
+//2:声明自定义插件的group和version
+group='test.plugin'
+version='1.0.0'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //保存到本地的Maven库中
+            repository(url: uri('../test_repo'))
+        }
+    }
+}
